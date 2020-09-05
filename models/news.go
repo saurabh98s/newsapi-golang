@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// News implements the data recieved from the API
 type News struct {
 	Status       string `json:"status"`
 	TotalResults int    `json:"totalResults"`

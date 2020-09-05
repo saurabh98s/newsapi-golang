@@ -14,7 +14,7 @@ import (
 func main() {
 	router := mux.NewRouter()
 	news := handlers.NewInstanceNews(&logrus.Logger{})
-	router.HandleFunc("/", news.FetchNews)
+	router.HandleFunc("/", news.FetchNewsHeadlines)
 	logger.Log.Info("[DEBUG] Starting Server on port 8080")
 	err := http.ListenAndServe(":8080", router)
 	if err != nil {

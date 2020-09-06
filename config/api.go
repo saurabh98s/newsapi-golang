@@ -15,6 +15,7 @@ type api struct {
 func (apiConfig *api) load() {
 	logger.Log.Info("Reading API config...")
 	// viper.SetEnvPrefix("api")
+	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 
 	apiConfig.apiKey = viper.GetString("api_key")

@@ -23,7 +23,7 @@ func NewInstanceNews(l *logrus.Logger) *News {
 }
 
 // FetchNewsHeadlines returns the fetched news in form of JSON
-func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) {
+func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]models.Articles,error){
 	var response models.News
 
 	n.l.Info("GET FetchNewsHeadlines")
@@ -52,11 +52,22 @@ func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = json.Unmarshal([]byte(readBody), &response)
-	
+
 	if err != nil {
 		n.l.Error(groupError + err.Error())
 	}
 
-	fmt.Fprintf(w, response.Articles[0].Description)
+	// var arr []models.News
+
+	return response.Articles,nil
 
 }
+
+// // FetchBreakingNews about
+// func  (n *News) FetchBreakingNews(w http.ResponseWriter, r *http.Request){
+// 	groupError:="[ERROR] Fetching Breaking News"
+// 	var response *models.News
+
+// 	resp:=http.Get("")
+
+// }

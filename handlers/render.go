@@ -14,7 +14,7 @@ func Init() {
 
 // RenderMainPage the News Page
 func (n *News) RenderMainPage(w http.ResponseWriter, r *http.Request) {
-
+	n.l.Info("/GET mainPage")
 	Arr, err := n.FetchNewsHeadlines(w, r)
 	if err != nil {
 		n.l.Error(err)
@@ -25,7 +25,4 @@ func (n *News) RenderMainPage(w http.ResponseWriter, r *http.Request) {
 		n.l.Error(err)
 	}
 }
-// RenderSearchResults renders the search results page
-// func (n *News) RenderSearchResults(w http.ResponseWriter, r *http.Request)  {
-	
-// }
+

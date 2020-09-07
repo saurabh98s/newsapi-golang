@@ -60,8 +60,8 @@ func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]mod
 
 }
 
-// FetchSearchBar reads the form input and searches the matching query
-func (n *News) FetchSearchBar(w http.ResponseWriter, r *http.Request) {
+// FetchAndRenderSearchBar reads the form input and searches the matching query
+func (n *News) FetchAndRenderSearchBar(w http.ResponseWriter, r *http.Request) {
 	groupError := "[ERROR] FETCH SEARCH BAR"
 	var searchResults *models.News
 	searchData := r.FormValue("search-bar")
@@ -85,9 +85,18 @@ func (n *News) FetchSearchBar(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		n.l.Error(groupError + err.Error())
 	}
-	
-	err = tpl.ExecuteTemplate(w, "search.html", searchResults.Articles[0:5])
-	if err != nil {
-		n.l.Error(err)
+
+	if searchResults.TotalResults < 5 {
+
+		err = tpl.ExecuteTemplate(w, "404.html", "Not Enough newsworthy")
+		if err != nil {
+			n.l.Error(err)
+		}
+	} else {
+		err = tpl.ExecuteTemplate(w, "search.html", searchResults.Articles[0:5])
+		if err != nil {
+			n.l.Error(err)
+		}
 	}
+
 }

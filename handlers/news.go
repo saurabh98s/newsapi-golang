@@ -23,7 +23,7 @@ func NewInstanceNews(l *logrus.Logger) *News {
 }
 
 // FetchNewsHeadlines returns the fetched news in form of JSON
-func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]models.Articles,error){
+func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]models.Articles, error) {
 	var response models.News
 
 	n.l.Info("GET FetchNewsHeadlines")
@@ -38,7 +38,6 @@ func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]mod
 	}
 	fmt.Println("Key Found: ", apiKey)
 
-	
 	resp, err := http.Get("https://newsapi.org/v2/top-headlines?country=in&apiKey=29d795ddf1c040778350321158922cd3" + apiKey)
 	if err != nil {
 		n.l.Error(groupError + err.Error())
@@ -57,17 +56,38 @@ func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]mod
 		n.l.Error(groupError + err.Error())
 	}
 
-	// var arr []models.News
-
-	return response.Articles,nil
+	return response.Articles, nil
 
 }
 
-// // FetchBreakingNews about
-// func  (n *News) FetchBreakingNews(w http.ResponseWriter, r *http.Request){
-// 	groupError:="[ERROR] Fetching Breaking News"
-// 	var response *models.News
+// FetchSearchBar reads the form input and searches the matching query
+func (n *News) FetchSearchBar(w http.ResponseWriter, r *http.Request) {
+	groupError := "[ERROR] FETCH SEARCH BAR"
+	var searchResults *models.News
+	searchData := r.FormValue("search-bar")
+	if searchData != "" {
+		n.l.Info("Got Data", searchData)
+	}
+	resp, err := http.Get("https://newsapi.org/v2/top-headlines?q=" + searchData + "&apiKey=29d795ddf1c040778350321158922cd3")
+	if err != nil {
+		n.l.Error(groupError + err.Error())
+	}
+	defer resp.Body.Close()
 
-// 	resp:=http.Get("")
+	readBody, err := ioutil.ReadAll(resp.Body)
 
-// }
+	if err != nil {
+		n.l.Error(groupError + err.Error())
+	}
+
+	err = json.Unmarshal([]byte(readBody), &searchResults)
+
+	if err != nil {
+		n.l.Error(groupError + err.Error())
+	}
+	
+	err = tpl.ExecuteTemplate(w, "search.html", searchResults.Articles[0:5])
+	if err != nil {
+		n.l.Error(err)
+	}
+}

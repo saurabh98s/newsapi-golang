@@ -55,23 +55,13 @@
     </form>
   </nav>
 
-  <div class="container my-3">
-    <h3>Latest <span class="badge badge-secondary">by Toofan Express</span></h3>
-    <hr>
+  <!-- <div class="container my-3">
     {{range .}}
     <div class="alert alert-primary" role="alert" >{{.Title}} </div>
     {{end}}
     <div class="accordion" id="newsAccordion"></div>
 
-  </div>
-
-  <!-- <div class="container my-3">
-    <h3>Special News<span class="badge badge-secondary">by Toofan Express</span></h3>
-    <hr>
-    <div class="accordion" id="newsAccordion"></div>
-
   </div> -->
-  <h1 class="display-4 text-xs-center m-y-3 text-muted" id="speakers">BREAKING NEWS</h1>
   <div class="card-deck">
     <!-- card starts -->
 
@@ -80,7 +70,7 @@
       <img class="card-img-top" src="{{.URLToImage}}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{.Title}}</h5>
-        <p class="card-text">{{.Content}}</p>
+        <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
         <a href="{{.URL}}" class="btn btn-primary">Read More</a>
       </div>
       <div class="card-footer">
@@ -90,10 +80,6 @@
     {{end}}
     <!-- card ends -->
   </div>
-  <!-- <div class="btn-group my -6" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary">Next</button>
-  
-  </div> -->
 
     <!-- Optional JavaScript -->
 
@@ -107,15 +93,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"></script>
     <script src="news.js"></script>
-    <script>
-      document.getElementById("search-bar").onsubmit=makeRequest;
-      function makeRequest() {
-        var xhr= new XMLHttpRequest();
-        xhr.open()
-      }
 
-
-    </script>
 
 
 </body>

@@ -15,7 +15,6 @@ func main() {
 	handlers.Init()
 	router := mux.NewRouter()
 	news := handlers.NewInstanceNews(&logrus.Logger{})
-	// router.HandleFunc("/", news.FetchNewsHeadlines)
 	router.HandleFunc("/news",news.RenderMainPage)
 	router.HandleFunc("/search",news.FetchAndRenderSearchBar)
 	logger.Log.Info("[DEBUG] Starting Server on port 8080")

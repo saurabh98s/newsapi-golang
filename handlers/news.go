@@ -26,7 +26,7 @@ func NewInstanceNews(l *logrus.Logger) *News {
 func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]models.Articles, error) {
 	var response models.News
 
-	n.l.Info("GET FetchNewsHeadlines")
+	fmt.Println("GET FetchNewsHeadlines")
 
 	groupError := "[ERROR] FETCH NEWS"
 
@@ -73,7 +73,7 @@ func (n *News) FetchAndRenderSearchBar(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		n.l.Error(groupError + err.Error())
 	}
-	
+
 	defer resp.Body.Close()
 
 	readBody, err := ioutil.ReadAll(resp.Body)

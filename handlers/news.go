@@ -64,14 +64,16 @@ func (n *News) FetchNewsHeadlines(w http.ResponseWriter, r *http.Request) ([]mod
 func (n *News) FetchAndRenderSearchBar(w http.ResponseWriter, r *http.Request) {
 	groupError := "[ERROR] FETCH SEARCH BAR"
 	var searchResults *models.News
+
+
 	searchData := r.FormValue("search-bar")
-	if searchData != "" {
-		n.l.Info("Got Data", searchData)
-	}
+	n.l.Info("Got Data", searchData)
+	
 	resp, err := http.Get("https://newsapi.org/v2/top-headlines?q=" + searchData + "&apiKey=29d795ddf1c040778350321158922cd3")
 	if err != nil {
 		n.l.Error(groupError + err.Error())
 	}
+	
 	defer resp.Body.Close()
 
 	readBody, err := ioutil.ReadAll(resp.Body)

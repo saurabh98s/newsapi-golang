@@ -26,3 +26,16 @@ func (n *News) RenderMainPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// RenderUSMainPage the News Page
+func (n *News) RenderUSMainPage(w http.ResponseWriter, r *http.Request) {
+	n.l.Info("/GET USPage")
+	Arr, err := n.FetchUSNewsHeadlines(w, r)
+	if err != nil {
+		n.l.Error(err)
+	}
+	n.l.Info(Arr[0].Title)
+	err = tpl.ExecuteTemplate(w, "news.html", Arr[0:5])
+	if err != nil {
+		n.l.Error(err)
+	}
+}
